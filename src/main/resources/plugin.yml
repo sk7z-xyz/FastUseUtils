@@ -1,0 +1,25 @@
+name: FastUseUtils
+main: xyz.sk7z.fastuseutils.FastUseUtils
+version: ${project.version}
+api-version: 1.15
+depend: [EcoFramework]
+commands:
+  fu:
+    description: fastuse command.
+    usage: /<command>
+    permission: fastuse
+  fu conf:
+    description: fastuse command.
+    usage: /<command> [commandType] [true/false]
+    permission: fastuse.conf
+  fu status:
+    description: fastuse command.
+    usage: /<command>
+    permission: fastuse.status
+  fu timesync:
+    description: fastuse command.
+    usage: /<command> [true/false]
+    permission: fastuse.timesync
+
+
+
