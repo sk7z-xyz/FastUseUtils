@@ -109,8 +109,10 @@ class PlayerChairScheduler extends BukkitRunnable {
         if (arrow.getPassengers().size() == 0) {
             arrow.remove();
             if (playerChairOptions.getArrow() == arrow) {
-                //プレイヤーとの距離を測り､コマンドによる移動でなければ､プレイヤーを1マス上にテレポートさせる
-                if (player.getLocation().distance(spawn_loc) < 2f) {
+                //worldが同一かチェック後､プレイヤーとの距離を測り､コマンドによる移動でなければ､プレイヤーを1マス上にテレポートさせる
+                if (player.getLocation().getWorld() != null && spawn_loc.getWorld() != null &&
+                        player.getLocation().getWorld().equals(spawn_loc.getWorld()) &&
+                        player.getLocation().distance(spawn_loc) < 2f) {
                     player.teleport(spawn_loc.setDirection(player.getLocation().getDirection()).add(0, 1, 0));
                 }
             }
@@ -121,8 +123,10 @@ class PlayerChairScheduler extends BukkitRunnable {
         if (!arrow.getLocation().equals(arrow_loc)) {
             arrow.remove();
             if (playerChairOptions.getArrow() == arrow) {
-                //プレイヤーとの距離を測り､コマンドによる移動でなければ､プレイヤーを1マス上にテレポートさせる
-                if (player.getLocation().distance(spawn_loc) < 2f) {
+                //worldが同一かチェック後､プレイヤーとの距離を測り､コマンドによる移動でなければ､プレイヤーを1マス上にテレポートさせる
+                if (player.getLocation().getWorld() != null && spawn_loc.getWorld() != null &&
+                        player.getLocation().getWorld().equals(spawn_loc.getWorld()) &&
+                        player.getLocation().distance(spawn_loc) < 2f) {
                     player.teleport(spawn_loc.setDirection(player.getLocation().getDirection()).add(0, 1, 0));
                 }
             }
