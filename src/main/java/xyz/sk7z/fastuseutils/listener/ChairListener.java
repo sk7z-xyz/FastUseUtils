@@ -2,11 +2,9 @@ package xyz.sk7z.fastuseutils.listener;
 
 import jp.minecraftuser.ecoframework.ListenerFrame;
 import jp.minecraftuser.ecoframework.PluginFrame;
-import net.minecraft.world.level.block.CarpetBlock;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_18_R2.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftArrow;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -50,11 +48,11 @@ public class ChairListener extends ListenerFrame {
         if (clickedBlock == null) {
             return;
         }
-
+        BlockData blockData = clickedBlock.getBlockData();
         if (Utils.isChairBlock(clickedBlock)) {
             y = 0;
             //レモン鯖向けカスタマイズ カーペットに座る
-        } else if (((CraftBlock) clickedBlock).getNMS().getBlock() instanceof CarpetBlock){
+        } else  if (blockData.getMaterial().name().contains("CARPET")) {
             y = -0.5;
         }else{
             return;
@@ -65,7 +63,7 @@ public class ChairListener extends ListenerFrame {
         loc.setY(loc.getY() + y);
 
         for (Entity entity : loc.getWorld().getNearbyEntities(loc, 0.1, 0.1, 0.1)) {
-            if (entity instanceof CraftArrow) {
+            if (entity instanceof Arrow) {
                 if ((entity).getPassengers().size() > 0) {
                     //椅子に座ってる人がいるならキャンセル
                     return;
