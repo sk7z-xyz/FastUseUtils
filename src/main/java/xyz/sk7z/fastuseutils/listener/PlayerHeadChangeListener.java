@@ -2,10 +2,8 @@ package xyz.sk7z.fastuseutils.listener;
 
 import jp.minecraftuser.ecoframework.ListenerFrame;
 import jp.minecraftuser.ecoframework.PluginFrame;
-import net.minecraft.nbt.Tag;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,34 +19,6 @@ public class PlayerHeadChangeListener extends ListenerFrame {
         super(plg_, name_);
     }
 
-
-    //Headの情報を表示する
-    //コマンド用意するのがめんどかった()
-    @EventHandler(priority = EventPriority.LOW)
-    public void playerHeadInfo(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        ItemStack item_skull;
-        Block block = event.getClickedBlock();
-        if (block == null) {
-            return;
-        }
-        if (block.getType() != Material.CARROTS) {
-            return;
-        }
-        if (event.getItem() != null && event.getItem().getType() == Material.PLAYER_HEAD) {
-            item_skull = event.getItem();
-        } else {
-            return;
-        }
-        event.setCancelled(true);
-        net.minecraft.world.item.ItemStack nms_item_skull = CraftItemStack.asNMSCopy(item_skull);
-
-        Tag skull_Owner = nms_item_skull.getTag() != null ? nms_item_skull.getTag().get("SkullOwner") : null;
-        if (skull_Owner != null) {
-            player.sendMessage(skull_Owner.toString());
-        }
-    }
-
     @EventHandler(priority = EventPriority.LOW)
     public void playerHeadChange(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
@@ -62,19 +32,16 @@ public class PlayerHeadChangeListener extends ListenerFrame {
         } else {
             return;
         }
-        ItemStack item_skull;
-        if (player.getInventory().getItemInMainHand().getType() == Material.PLAYER_HEAD) {
-            item_skull = player.getInventory().getItemInMainHand();
-            playerHeadChange(item_skull, target_player);
+        ItemStack itemSkull = player.getInventory().getItemInMainHand();
+        if (itemSkull.getType() == Material.PLAYER_HEAD) {
+            playerHeadChange(itemSkull, target_player);
         }
     }
 
-    public ItemStack playerHeadChange(ItemStack item_skull, Player player) {
+    public void playerHeadChange(ItemStack item_skull, Player player) {
         SkullMeta skull_meta = (SkullMeta) item_skull.getItemMeta();
         skull_meta.setOwningPlayer(player);
         item_skull.setItemMeta(skull_meta);
-
-        return item_skull;
     }
 
 }
