@@ -58,6 +58,12 @@ public class ChairListener extends ListenerFrame {
             return;
         }
 
+        BlockData topBlockData = clickedBlock.getWorld().getBlockData(clickedBlock.getLocation().add(0,1,0));
+        //1つ上のブロックが固形ブロックならキャンセル
+        if(topBlockData.getMaterial().isSolid()){
+            return;
+        }
+
         Location loc = clickedBlock.getLocation().setDirection(player.getLocation().getDirection()).add(new Vector(0.5, 0, 0.5));
 
         loc.setY(loc.getY() + y);
